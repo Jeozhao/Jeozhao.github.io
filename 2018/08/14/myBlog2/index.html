@@ -23,7 +23,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13547879-3f3eb2387730781f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13547879-bd67c778ccb67f76.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/13547879-34640c76407efcda.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-13T16:20:15.281Z">
+<meta property="og:updated_time" content="2018-08-15T00:43:19.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Faster R-CNN从原理详解（基于keras代码）">
 <meta name="twitter:description" content="本文主要通过通过keras版本的代码来讲解:https://github.com/yhenon/keras-frcnn原文链接:http://www.ee.bgu.ac.il/~rrtammy/DNN/reading/FastSun.pdf  1.faster RCNN整个流程图 其实RCNN系列目标检测，大致分为两个阶段：一是获取候选区域（region proposal 或 RoI），二是对候">
@@ -187,8 +187,7 @@
 <p>本文主要通过通过keras版本的<a href="https://github.com/yhenon/keras-frcnn" target="_blank" rel="noopener">代码</a>来讲解:<a href="https://github.com/yhenon/keras-frcnn" target="_blank" rel="noopener">https://github.com/yhenon/keras-frcnn</a><br>原文链接:<a href="http://www.ee.bgu.ac.il/~rrtammy/DNN/reading/FastSun.pdf" target="_blank" rel="noopener">http://www.ee.bgu.ac.il/~rrtammy/DNN/reading/FastSun.pdf</a></p>
 </blockquote>
 <h2 id="1-faster-RCNN整个流程图"><a href="#1-faster-RCNN整个流程图" class="headerlink" title="1.faster RCNN整个流程图"></a>1.faster RCNN整个流程图</h2><p><img src="http://upload-images.jianshu.io/upload_images/13547879-39bf2911c0a2a49e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图1 faster R-CNN流程图" title="原文网络流程图"></p>
-<p>其实RCNN系列目标检测，大致分为两个阶段：一是获取候选区域（region proposal 或 RoI），二是对候选区域进行分类判断以及边框回归。Faster R-CNN其实也是符合两个阶段，只是Faste R-CNN使用RPN网络提取候选框，后面的分类和边框回归和R-CNN差不多。所以有时候我们可以将faster r-cnn看成RPN部分和R-CNN部分。<br>从如图1可以看出，faster r-cnn又包含了以下4重要的部分：</p>
-<p><strong>1. Conv layers</strong><br>这里应该理解为基本卷积网络(base net).通过该网络来提取原始图片的featuremap特征,最后将这些特征送入RPN网络和RCNN网络。有一点需要注意的就是,真正送入RPN网络的featuremap其实并不是整张图片的产生的featuremap,具体怎么选择,后面仔细说明。在本文的讲解中，我们会使用到两种base Net：vgg16 和 Resnet50.</p>
+<p>其实RCNN系列目标检测，大致分为两个阶段：一是获取候选区域（region proposal 或 RoI），二是对候选区域进行分类判断以及边框回归。Faster R-CNN其实也是符合两个阶段，只是Faste R-CNN使用RPN网络提取候选框，后面的分类和边框回归和R-CNN差不多。所以有时候我们可以将faster r-cnn看成RPN部分和R-CNN部分。<br>从如图1可以看出，faster r-cnn又包含了以下4重要的部分：<br><a id="more"></a><br><strong>1. Conv layers</strong><br>这里应该理解为基本卷积网络(base net).通过该网络来提取原始图片的featuremap特征,最后将这些特征送入RPN网络和RCNN网络。有一点需要注意的就是,真正送入RPN网络的featuremap其实并不是整张图片的产生的featuremap,具体怎么选择,后面仔细说明。在本文的讲解中，我们会使用到两种base Net：vgg16 和 Resnet50.</p>
 <p><strong>2. RPN网络</strong><br>RPN网络用于生成region proposals（也可以说是RoI-region of interest）。该层通过sigmoid函数判断anchors属于foreground或者background（其实就是一个二分类，论文代码-caffe版本用的softmax输出两个值，前景和背景的概率，本文使用keras版本指数一个值表示前景的概率），再利用bounding box regression修正anchors获得修正后的RoI。</p>
 <p><strong>3. Roi Pooling</strong><br>该层通过输入feature maps和RoI，其中featuremap就是base Net提取的，而RoI是RPN网络提取的。通过该层pooling实现提取RoI的feature maps，送入后续全连接层判定目标类别。</p>
 <p><strong>4. Classifier</strong><br>该部分，叫做分类部分，其实就是对候选区域进行检测部分了。利用RoI feature maps计算RoI的类别，同时再次bounding box regression获得检测框最终的位置。</p>
