@@ -8,13 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>A road to computer vision</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Faster R-CNN从原理详解（基于keras代码）  本文主要通过通过keras版本的代码来讲解:https://github.com/yhenon/keras-frcnn原文链接:http://www.ee.bgu.ac.il/~rrtammy/DNN/reading/FastSun.pdf  1.faster RCNN整个流程图 其实RCNN系列目标检测，大致分为两个阶段：一是获取候选区">
-<meta name="keywords" content="目标检测,Faster R-CNN,Keras">
+  <meta name="description" content="Faster R-CNN从原理详解（基于keras代码） tags:  目标检测 Faster R-CNN Keras   本文主要通过通过keras版本的代码来讲解:https://github.com/yhenon/keras-frcnn原文链接:http://www.ee.bgu.ac.il/~rrtammy/DNN/reading/FastSun.pdf  1.faster RCNN整个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A road to computer vision">
 <meta property="og:url" content="http://yoursite.com/2018/08/14/myBlog2/index.html">
 <meta property="og:site_name" content="A road to computer vision">
-<meta property="og:description" content="Faster R-CNN从原理详解（基于keras代码）  本文主要通过通过keras版本的代码来讲解:https://github.com/yhenon/keras-frcnn原文链接:http://www.ee.bgu.ac.il/~rrtammy/DNN/reading/FastSun.pdf  1.faster RCNN整个流程图 其实RCNN系列目标检测，大致分为两个阶段：一是获取候选区">
+<meta property="og:description" content="Faster R-CNN从原理详解（基于keras代码） tags:  目标检测 Faster R-CNN Keras   本文主要通过通过keras版本的代码来讲解:https://github.com/yhenon/keras-frcnn原文链接:http://www.ee.bgu.ac.il/~rrtammy/DNN/reading/FastSun.pdf  1.faster RCNN整个">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/13547879-39bf2911c0a2a49e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13547879-cd33f73156a8f37c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -24,10 +23,10 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13547879-3f3eb2387730781f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13547879-bd67c778ccb67f76.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/13547879-34640c76407efcda.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-15T01:56:42.575Z">
+<meta property="og:updated_time" content="2018-08-15T02:00:00.647Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A road to computer vision">
-<meta name="twitter:description" content="Faster R-CNN从原理详解（基于keras代码）  本文主要通过通过keras版本的代码来讲解:https://github.com/yhenon/keras-frcnn原文链接:http://www.ee.bgu.ac.il/~rrtammy/DNN/reading/FastSun.pdf  1.faster RCNN整个流程图 其实RCNN系列目标检测，大致分为两个阶段：一是获取候选区">
+<meta name="twitter:description" content="Faster R-CNN从原理详解（基于keras代码） tags:  目标检测 Faster R-CNN Keras   本文主要通过通过keras版本的代码来讲解:https://github.com/yhenon/keras-frcnn原文链接:http://www.ee.bgu.ac.il/~rrtammy/DNN/reading/FastSun.pdf  1.faster RCNN整个">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/13547879-39bf2911c0a2a49e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="A road to computer vision" type="application/atom+xml">
@@ -147,7 +146,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Faster-R-CNN从原理详解（基于keras代码）"><a href="#Faster-R-CNN从原理详解（基于keras代码）" class="headerlink" title="Faster R-CNN从原理详解（基于keras代码）"></a>Faster R-CNN从原理详解（基于keras代码）</h1><hr>
+        <hr>
+<h1 id="Faster-R-CNN从原理详解（基于keras代码）"><a href="#Faster-R-CNN从原理详解（基于keras代码）" class="headerlink" title="Faster R-CNN从原理详解（基于keras代码）"></a>Faster R-CNN从原理详解（基于keras代码）</h1><hr>
+<p>tags:</p>
+<ul>
+<li>目标检测</li>
+<li>Faster R-CNN</li>
+<li>Keras</li>
+</ul>
 <blockquote>
 <p>本文主要通过通过keras版本的<a href="https://github.com/yhenon/keras-frcnn" target="_blank" rel="noopener">代码</a>来讲解:<a href="https://github.com/yhenon/keras-frcnn" target="_blank" rel="noopener">https://github.com/yhenon/keras-frcnn</a><br>原文链接:<a href="http://www.ee.bgu.ac.il/~rrtammy/DNN/reading/FastSun.pdf" target="_blank" rel="noopener">http://www.ee.bgu.ac.il/~rrtammy/DNN/reading/FastSun.pdf</a></p>
 </blockquote>
@@ -197,25 +203,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">目标检测</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Faster R-CNN</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Keras</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
